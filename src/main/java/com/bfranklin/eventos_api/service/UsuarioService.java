@@ -1,5 +1,7 @@
 package com.bfranklin.eventos_api.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,5 +19,25 @@ public class UsuarioService {
 	@Transactional
 	public Usuario salvar_usuario(Usuario usuario) {
 		return usuarioRepository.save(usuario);
+	}
+	
+	@Transactional(readOnly = true)
+	public Usuario buscarPorId(Long id) {
+		return usuarioRepository.findById(id).orElseThrow(
+				() -> new RuntimeException("Usuário não encontrado!")
+				
+				);
+	}
+	
+	@Transactional
+	public Usuario editarSenha(long id, String senha_nova) {
+		Usuario user = buscarPorId(id); //Persistente, terminando após o fim da requisição
+		user.setPassword(senha_nova);
+		return user;
+	}
+
+	@Transactional(readOnly = true)
+	public List<Usuario> buscarTodos() {
+		return usuarioRepository.findAll();
 	}
 }
