@@ -1,12 +1,11 @@
 package com.bfranklin.eventos_api.entity;
 
 import jakarta.persistence.*;
-
-
 import java.io.Serializable;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+
 
 
 @Entity
@@ -14,7 +13,7 @@ import java.util.Objects;
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -36,9 +35,24 @@ public class Usuario implements Serializable {
 	@Column(name = "data_modificacao")
 	private LocalDateTime data_modificacao;
 	
+	@Column(name = "criado_por")
+	private String criado_por;
+	
+	@Column(name = "modificado_por")
+	private String modificado_por;
 	
 	public enum Role {
 		ROLE_ADMIN, ROLE_USER
+	}
+
+
+	public Usuario() {}
+	
+	public Usuario(String username, String password, Role role) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.role = role;
 	}
 
 
@@ -64,6 +78,83 @@ public class Usuario implements Serializable {
 	public String toString() {
 		return "Usuario [id=" + id + "]";
 	}
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public Role getRole() {
+		return role;
+	}
+
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+
+	public LocalDateTime getData_criacao() {
+		return data_criacao;
+	}
+
+
+	public void setData_criacao(LocalDateTime data_criacao) {
+		this.data_criacao = data_criacao;
+	}
+
+
+	public LocalDateTime getData_modificacao() {
+		return data_modificacao;
+	}
+
+
+	public void setData_modificacao(LocalDateTime data_modificacao) {
+		this.data_modificacao = data_modificacao;
+	}
+
+	public String getCriado_por() {
+		return criado_por;
+	}
+
+	public void setCriado_por(String criado_por) {
+		this.criado_por = criado_por;
+	}
+
+	public String getModificado_por() {
+		return modificado_por;
+	}
+
+	public void setModificado_por(String modificado_por) {
+		this.modificado_por = modificado_por;
+	}
+	
 	
 	
 }
