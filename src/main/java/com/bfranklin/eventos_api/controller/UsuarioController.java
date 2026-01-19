@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bfranklin.eventos_api.dto.UsuarioCreateDto;
+import com.bfranklin.eventos_api.dto.UsuarioResponseDto;
+import com.bfranklin.eventos_api.dto.mapper.UsuarioMapper;
 import com.bfranklin.eventos_api.entity.Usuario;
 import com.bfranklin.eventos_api.service.UsuarioService;
 
@@ -25,9 +28,10 @@ public class UsuarioController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Usuario> create_user(@RequestBody Usuario usuario){
-		Usuario user = usuarioService.salvar_usuario(usuario);
-		return ResponseEntity.status(HttpStatus.CREATED).body(user);
+	public ResponseEntity<UsuarioResponseDto> create_user(@RequestBody UsuarioCreateDto usuarioCreateDto){
+		Usuario user = UsuarioMapper.toUsuario(usuarioCreateDto);
+		Usuario user_criado = usuarioService.salvar_usuario(user);
+		return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toUsuarioResponseDto(user_criado));
 	}
 	
 	@GetMapping("/{id}")

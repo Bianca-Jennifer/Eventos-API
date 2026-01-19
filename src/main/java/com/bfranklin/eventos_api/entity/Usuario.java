@@ -19,15 +19,15 @@ public class Usuario implements Serializable {
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "username", nullable = false, unique = true, length = 100)
-	private String username;
+	@Column(name = "email", nullable = false, unique = true, length = 100)
+	private String email;
 	
 	@Column(name = "password", nullable = false, length = 200)
 	private String password;
 	
 	@Column(name = "role", nullable = false, length = 25)
 	@Enumerated(EnumType.STRING)
-	private Role role;
+	private Role role = Role.ROLE_USER;
 	
 	@Column(name = "data_criacao")
 	private LocalDateTime data_criacao;
@@ -48,9 +48,9 @@ public class Usuario implements Serializable {
 
 	public Usuario() {}
 	
-	public Usuario(String username, String password, Role role) {
+	public Usuario(String email, String password, Role role) {
 		super();
-		this.username = username;
+		this.email = email;
 		this.password = password;
 		this.role = role;
 	}
@@ -90,13 +90,13 @@ public class Usuario implements Serializable {
 	}
 
 
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
 
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 
