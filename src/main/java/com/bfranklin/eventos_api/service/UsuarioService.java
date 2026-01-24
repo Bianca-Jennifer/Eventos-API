@@ -57,4 +57,16 @@ public class UsuarioService {
 	public List<Usuario> buscarTodos() {
 		return usuarioRepository.findAll();
 	}
+
+	@Transactional(readOnly = true)
+	public Usuario buscarPorEmail(String email) {
+		return usuarioRepository.findByEmail(email).orElseThrow(
+				() -> new EntityNotFoundException(String.format("Usuário %s não encontrado!", email))
+				
+				);
+	}
+
+	public Usuario.Role BuscarRolePorEmail(String email) {
+		return usuarioRepository.findRoleByEmail(email);
+	}
 }
