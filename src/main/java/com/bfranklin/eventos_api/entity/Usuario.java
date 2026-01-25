@@ -1,14 +1,29 @@
 package com.bfranklin.eventos_api.entity;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 
 @Entity
 @Table(name = "usuarios")
+@EntityListeners(AuditingEntityListener.class)
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -28,17 +43,24 @@ public class Usuario implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Role role = Role.ROLE_USER;
 	
+	
+	@CreatedDate
 	@Column(name = "data_criacao")
 	private LocalDateTime data_criacao;
 	
+	@LastModifiedDate
 	@Column(name = "data_modificacao")
 	private LocalDateTime data_modificacao;
 	
+	@CreatedBy
 	@Column(name = "criado_por")
 	private String criado_por;
 	
+	@LastModifiedBy
 	@Column(name = "modificado_por")
 	private String modificado_por;
+	
+	
 	
 	public enum Role {
 		ROLE_ADMIN, ROLE_USER

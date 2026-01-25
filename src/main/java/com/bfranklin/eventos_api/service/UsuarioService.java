@@ -3,6 +3,7 @@ package com.bfranklin.eventos_api.service;
 import java.util.List;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,14 +16,17 @@ import com.bfranklin.eventos_api.repository.UsuarioRepository;
 @Service
 public class UsuarioService {
 	private final UsuarioRepository usuarioRepository;
+	private final PasswordEncoder passwordEncoder;
 
-	public UsuarioService(UsuarioRepository usuarioRepository) {
+	public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
 		this.usuarioRepository = usuarioRepository;	
+		this.passwordEncoder = passwordEncoder;
 	}
 	
 	@Transactional
 	public Usuario salvar_usuario(Usuario usuario) {
 		try {
+			usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 			return usuarioRepository.save(usuario);
 		}catch(DataIntegrityViolationException ex) {
 			throw new EmailUniqueViolationException(String.format("Usuário %s já existe!", usuario.getEmail()));
@@ -39,9 +43,9 @@ public class UsuarioService {
 	
 	@Transactional
 	public Usuario editarSenha(long id, String senha_atual, String senha_nova, String senha_confirmada) {
-		Usuario user = buscarPorId(id); //Persistente, terminando após o fim da requisição
+		Usuario user = buscarPorId(id); //Persistente, terminando depois do fim da request
 		
-		if(!user.getPassword().equals(senha_atual)) {
+		if(!passwordEncoder.matches(senha_atual, user.getPassword())) {
 			throw new PasswordInvalidException("Senha inválida!");
 		}
 		
@@ -49,7 +53,7 @@ public class UsuarioService {
 			throw new PasswordInvalidException("Senha nova não confere com a senha de confirmação!");
 		}
 		
-		user.setPassword(senha_nova);
+		user.setPassword(passwordEncoder.encode(senha_nova));
 		return user;
 	}
 

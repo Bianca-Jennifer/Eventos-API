@@ -3,11 +3,12 @@ package com.bfranklin.eventos_api.jwt;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import com.bfranklin.eventos_api.entity.Usuario;
 import com.bfranklin.eventos_api.service.UsuarioService;
 
-
+@Service
 public class JwtUserDetailsService implements UserDetailsService {
 	private final UsuarioService usuarioService;
 	
