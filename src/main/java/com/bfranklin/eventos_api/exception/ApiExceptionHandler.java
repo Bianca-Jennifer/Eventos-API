@@ -3,6 +3,7 @@ package com.bfranklin.eventos_api.exception;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -47,6 +48,14 @@ public class ApiExceptionHandler {
 
 		return ResponseEntity.status(HttpStatusCode.valueOf(400)).contentType(MediaType.APPLICATION_JSON)
 				.body(new ErrorMessage(request, HttpStatusCode.valueOf(400), ex.getMessage()));
+	}
+	
+	
+	@ExceptionHandler(AccessDeniedException.class)
+	public ResponseEntity<ErrorMessage> accessDeniedException(AccessDeniedException ex, HttpServletRequest request){
+
+		return ResponseEntity.status(HttpStatusCode.valueOf(403)).contentType(MediaType.APPLICATION_JSON)
+				.body(new ErrorMessage(request, HttpStatusCode.valueOf(403), ex.getMessage()));
 	}
 	
 }

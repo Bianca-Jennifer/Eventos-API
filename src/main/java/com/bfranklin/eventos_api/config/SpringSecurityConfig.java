@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.bfranklin.eventos_api.jwt.JwtAuthenticationEntryPoint;
 import com.bfranklin.eventos_api.jwt.JwtAuthorizationFilter;
 //import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -32,11 +33,19 @@ public class SpringSecurityConfig {
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers(HttpMethod.POST, "/api/v1/usuarios").permitAll()
 						.requestMatchers(HttpMethod.POST, "/api/v1/auth").permitAll()
+						.requestMatchers(
+							    "/docs-events.html",
+							    "/docs-events/**",
+							    "/swagger-ui.html",
+							    "/swagger-ui/**",
+							    "/webjars/**"
+							).permitAll()
 						.anyRequest().authenticated()
 						).sessionManagement(
 								session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 						).addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class
-						).build();
+						).exceptionHandling(ex -> ex.authenticationEntryPoint(new JwtAuthenticationEntryPoint()))
+						.build();
 	}
 	
 	@Bean
