@@ -84,9 +84,7 @@ public class UsuarioController {
 	@Operation(summary = "Atualizar senha", 
 			security = @SecurityRequirement(name = "security"), description = "Requisição exige um Bearer Token.Acesso restrito à ADMIN/USER.",
 			responses = {
-					@ApiResponse(responseCode = "204", description = "Senha atualizada com sucesso!",
-							content = @Content(mediaType = "application/json", 
-							schema = @Schema(implementation = Void.class))),
+					@ApiResponse(responseCode = "204", description = "Senha atualizada com sucesso!"),
 					@ApiResponse(responseCode = "400", description = "Senha incorreta!",
 							content = @Content(mediaType = "application/json", 
 							schema = @Schema(implementation = ErrorMessage.class))),
