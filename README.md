@@ -9,7 +9,7 @@ Atualmente, a API possui a estrutura base de autenticação, usuários e seguran
 
 API REST desenvolvida com Spring Boot para um sistema de gerenciamento de eventos, utilizando autenticação e autorização via JWT, com separação de permissões entre usuários comuns e administradores.
 
-O projeto tem como objetivo simular um cenário real de backend, priorizando boas práticas de segurança, organização do código e controle de acesso.
+O projeto possui caráter educacional e tem como objetivo aplicar conceitos de desenvolvimento backend, priorizando boas práticas de segurança, organização do código e controle de acesso.
 
 ---
 
